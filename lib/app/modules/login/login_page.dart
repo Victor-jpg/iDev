@@ -12,20 +12,21 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  LoginBloc _loginBloc = Modular.get<LoginBloc>();
+  LoginBloc _loginBloc = Modular.get();
   TextEditingController _emailController;
   TextEditingController _passwordController;
   bool obscureText;
 
   _submit() async {
-    Modular.to.pushNamed("/home");
-
     if (!_formKey.currentState.validate()) {
       return;
     }
 
     final loginIsValid = await _loginBloc.fazerLogin(
         _emailController.text, _passwordController.text);
+
+    print("LOGINISVALID");
+    print(loginIsValid);
 
     if (loginIsValid) {
       Modular.to.pushNamed("/home");
@@ -40,8 +41,8 @@ class LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     obscureText = false;
-    _emailController = TextEditingController(text: 'dev@dev.com');
-    _passwordController = TextEditingController(text: '123123');
+    _emailController = TextEditingController(text: '');
+    _passwordController = TextEditingController(text: '');
   }
 
   @override
@@ -188,13 +189,13 @@ class LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-          Text(
-            'Esqueceu sua senha?',
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                color: Theme.of(context).primaryColor,
-                fontSize: 14,
-                fontWeight: FontWeight.bold),
-          ),
+          // Text(
+          //   'Esqueceu sua senha?',
+          //   style: Theme.of(context).textTheme.subtitle1?.copyWith(
+          //       color: Theme.of(context).primaryColor,
+          //       fontSize: 14,
+          //       fontWeight: FontWeight.bold),
+          // ),
           SizedBox(height: 80),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),

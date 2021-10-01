@@ -26,7 +26,7 @@ class LoginBloc extends Disposable {
   }
 
   void getCurrentUser() async {
-    CurrentUser currentUser = await loginRepository.currentUser();
+    CurrentUser currentUser = await loginRepository.currentUser(userTokenValue);
 
     userDataIn.add(currentUser.userData);
   }

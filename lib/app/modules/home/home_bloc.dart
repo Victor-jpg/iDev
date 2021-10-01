@@ -12,8 +12,8 @@ class HomeBloc extends Disposable {
   Stream get devsOut => _devsController.stream;
   get devsValue => _devsController.value;
 
-  void getDevs() async {
-    List<UserModel> listDevs = await homeRepository.getDevs();
+  void getDevs(String token) async {
+    List<UserModel> listDevs = await homeRepository.getDevs(token);
 
     devsIn.add(listDevs);
   }

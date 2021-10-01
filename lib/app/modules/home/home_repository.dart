@@ -9,15 +9,13 @@ class HomeRepository extends Disposable {
   Dio dio;
   HomeRepository(this.dio);
 
-  Future getDevs() async {
-    print("CHEGOU");
+  Future getDevs(String token) async {
     try {
-      print("OIIIIIIIIIIIII");
       Response response = await dio.get(
         "$API/devs",
         options: Options(headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer ${_loginBloc.userTokenValue}"
+          "Authorization": "Bearer ${token}"
         }),
       );
 

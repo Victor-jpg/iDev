@@ -17,6 +17,8 @@ class RegisterRepository extends Disposable {
 
       return {"statusCode": 201};
     } catch (error) {
+      print("ERRor");
+      print(error.response.data);
       if (error is DioError) {
         return error.response.data;
       }

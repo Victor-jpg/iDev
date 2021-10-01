@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_integrador/app/config/constants.dart';
@@ -26,7 +28,6 @@ class CurrentUser {
 }
 
 class LoginRepository extends Disposable {
-  LoginBloc _loginBloc = Modular.get<LoginBloc>();
   Dio dio;
   LoginRepository(this.dio);
 
@@ -52,16 +53,16 @@ class LoginRepository extends Disposable {
     }
   }
 
-  Future<CurrentUser> currentUser() async {
+  Future<CurrentUser> currentUser(String token) async {
     try {
       final response = await dio.get('$API/auth/profile',
           options: Options(headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer ${_loginBloc.userTokenValue}"
+            "Authorization": "Bearer $token"
           }));
-      print(response.data);
+
       UserModel userData = UserModel.fromJson(response.data);
-      print(userData);
+
       return CurrentUser(isValid: true, userData: userData);
     } catch (e) {
       return CurrentUser(isValid: false);

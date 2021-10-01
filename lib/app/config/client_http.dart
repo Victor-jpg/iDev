@@ -13,6 +13,7 @@ class ClientHttp {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+          print("OLA");
           if (_currentToken.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $_currentToken';
             options.headers['Content-Type'] = 'application/json';
@@ -22,6 +23,7 @@ class ClientHttp {
         onResponse: (Response response, ResponseInterceptorHandler handler) =>
             handler.resolve(response),
         onError: (DioError error, ErrorInterceptorHandler handler) async {
+          print("dsadasdsadasda");
           if (error.response?.statusCode == 401) {
             dio.interceptors.requestLock.lock();
             dio.interceptors.responseLock.lock();
@@ -31,10 +33,11 @@ class ClientHttp {
             dio.interceptors.requestLock.unlock();
             dio.interceptors.responseLock.unlock();
 
-            return dio.request(
-              options.path,
-              options: options.data,
-            );
+            return handler.reject(error);
+            // return dio.request(
+            //   options.path,
+            //   options: options.data,
+            // );
           }
           return handler.reject(error);
         },

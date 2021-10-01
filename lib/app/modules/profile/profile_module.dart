@@ -2,22 +2,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_integrador/app/modules/login/login_bloc.dart';
 import 'package:projeto_integrador/app/modules/login/login_page.dart';
 import 'package:projeto_integrador/app/modules/login/login_repository.dart';
+import 'package:projeto_integrador/app/modules/profile/profile_page.dart';
 
-class LoginModule extends Module {
+class ProfileModule extends Module {
   @override
-  final List<Bind> binds = [
-    Bind(
-      (i) => i.get<LoginRepository>(),
-    ),
-    Bind(
-      (i) => LoginBloc(i.get<LoginRepository>()),
-    ),
-  ];
+  final List<Bind> binds = [];
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute(Modular.initialRoute, child: (_, args) => LoginPage()),
-    ChildRoute("/login", child: (_, args) => LoginPage()),
+    ChildRoute(Modular.initialRoute, child: (_, args) => ProfilePage()),
   ];
 
   // static Inject get to => Inject<LoginModule>();

@@ -217,6 +217,7 @@ class RegisterInfoPageState extends State<RegisterInfoPage> {
 
       return _scaffoldKey.currentState.showSnackBar(_snack);
     }
+
     if (_imageProfile != null) {
       final responseUpload = await _registerBloc.uploadImage(_imageProfile.path,
           _registerBloc.registerValue["username"] + "/photoProfile");
@@ -227,7 +228,9 @@ class RegisterInfoPageState extends State<RegisterInfoPage> {
         "role": "dev"
       };
     } else {
-      _data = {"techs": _techs, "role": "dev"};
+      return _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('Escolha uma foto de perfil.'),
+      ));
     }
 
     _registerBloc.accumulateRegister(_data);
@@ -242,6 +245,11 @@ class RegisterInfoPageState extends State<RegisterInfoPage> {
       SnackBar _snack = SnackBar(content: Text(response["message"]));
 
       _scaffoldKey.currentState.showSnackBar(_snack);
+    } else {
+      return _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(
+            'Não conseguimos concluir o seu cadastro, tente novamente mais tarde.'),
+      ));
     }
   }
 
@@ -305,9 +313,7 @@ class RegisterInfoPageState extends State<RegisterInfoPage> {
                           child: CircleAvatar(
                             radius: 70.0,
                             backgroundImage: _imageProfile == null
-                                ? NetworkImage(
-                                    "https://lh3.googleusercontent.com/proxy/SngVq4T8-OJjQEGNvdBxyfvMyxLnK96Bsr12811Vv5JHuikeEIYP4Ehu3sqe_BJUkxlQ5zoryoXzGu9bjMSLVNVBf85jOsivdYPQ8hXudvBVsSs_Rasy_ZI",
-                                  )
+                                ? AssetImage("assets/icons/profile.png")
                                 : FileImage(_imageProfile),
                             backgroundColor: Colors.grey.withOpacity(0.5),
                           ),
